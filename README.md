@@ -18,5 +18,5 @@ Read each row from Data File (.xlsx) and store each cell Value(of Data File)  Co
 # Assumptions
 Consider the coloumn names to case insensitive, ie. Name = name.
 - - - - - - - - - - - - - - - - - - 
-Required Xlsx files  & JSON file is in resorces folder.
+Required Xlsx files  & JSON file is in resources folder.
 This tool should work with any data file and any template file.
