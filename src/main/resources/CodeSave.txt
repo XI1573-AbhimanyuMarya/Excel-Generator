@@ -1,0 +1,117 @@
+            String nameCellNumber=(String)jsonObject.get("name");
+            String ageCellNumber=(String)jsonObject.get("age");
+            String classCellNumber=(String)jsonObject.get("class");
+            String rankCellNumber=(String)jsonObject.get("rank");
+            String sectionCellNumber=(String)jsonObject.get("section");
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+            // WRITING A VALUE(BY DATA FILE) TO A CELL ADDRESS (BY JSON)
+
+
+              File templateinputFile = new File("C:/Java Projects/CleanCode/JavaTraining/src/main/resources/Sample-Template-File.xlsx");
+                     FileInputStream templateInputStream = new FileInputStream(templateinputFile);
+                     log.info("Template File Loaded Successfully");
+                     XSSFWorkbook templateWorkBook = new XSSFWorkbook(templateInputStream);
+                     XSSFSheet sheet = templateWorkBook.getSheetAt(0);
+
+                     // Writing as per Cell Address
+                     List<String> jsonValues=jsonFileLoader.readJsonFile();
+                         String Value1= dataFileLoader.hashMap.get(1).get(0).toString();
+                 System.out.println(Value1 +"" +Value1.getClass());
+
+
+                     CellReference cellReference=new CellReference(jsonValues.get(0));
+                     Row row=sheet.getRow(cellReference.getRow());
+                     Cell cell=row.getCell(cellReference.getCol());
+                     if (cell==null)
+                     {
+                        cell= row.createCell(cellReference.getCol());
+                     }
+                     cell.setCellValue(Cell.CELL_TYPE_STRING);
+                     cell.setCellValue(Value1);
+                     FileOutputStream fileOut = new FileOutputStream("check.xlsx");
+                     templateWorkBook.write(fileOut);
+                     fileOut.close();
+                     templateWorkBook.close();
+
+
+                 }
+----------------------------------------------------------------------------------------------------------------------
+
+    // ITERATING OVER EACH VALUE OF HASHMAP
+
+
+     for(int mapValueIterator =0; mapValueIterator<5; mapValueIterator++)
+            {
+                int finalMapValueIterator = mapValueIterator;
+                hashMap1.forEach((key, value)-> System.out.println(key + "= " + value.get(finalMapValueIterator)));
+
+            }
+
+
+     // TO STORE EACH VALUE FIRST IN STRING THEN SAVING IN CELL
+
+             for (Integer key : hashMap1.keySet()) {
+                 for (Object value : hashMap1.get(key)) {
+                     if (key == 0) {
+                         break;
+                     } else {
+                         String toPutValue = value.toString();
+
+                     }
+
+                 }
+             }
+
+
+
+
+
+
+ List<String> jsonValues = jsonFileLoader.readJsonFile();
+        hashMap1 = dataFileLoader.hashMap;
+        int outputFileNumber=0;
+
+        int mapValueIterator=0;
+
+            for (Integer hash_key : hashMap1.keySet()) {
+                for (Object hash_value : hashMap1.get(hash_key)) {
+                    if (hash_key == 0) {
+                        break;
+                    } else if (hash_key == 1) {
+
+
+                        CellReference cellReference = new CellReference(jsonValues.get(mapValueIterator));
+                        Row row = sheet.getRow(cellReference.getRow());
+                        Cell cell = row.getCell(cellReference.getCol());
+
+                        if (cell==null)
+                        {
+                            cell= row.createCell(cellReference.getCol());
+                        }
+                        cell.setCellValue(Cell.CELL_TYPE_STRING);
+
+                        String toPutValue = hash_value.toString();
+
+                        System.out.println(toPutValue + " :"+ cell.getRowIndex() + " ,"+cell.getColumnIndex() );
+                        cell.setCellValue(toPutValue);
+
+                        FileOutputStream fileOut = new FileOutputStream("output"+outputFileNumber+".xlsx");
+                        templateWorkBook.write(fileOut);
+
+
+
+
+                        outputFileNumber++;
+                        mapValueIterator++;
+
+                    }
+
+                }
+//
+
+            }
